@@ -5,13 +5,13 @@ module RxNav
       def search_by_name name, options = {}
         options = {max_results: 20, options: 0}.merge(options)
 
-        query = "/approximateTerm?term=#{name}"\
+        query = "approximateTerm?term=#{URI.encode_uri_component(name)}"\
                 "&maxEntries=#{options[:max_results]}"\
                 "&options=#{options[:options]}"
 
         # Get the data we care about in the right form
-        data = get_response_hash(query)[:approximate_group][:candidate]
-
+        data = get_response_hash(query).dig(:approximate_group, :candidate)
+        
         # If we didn't get anything, say so
         return nil if data.nil?
 
