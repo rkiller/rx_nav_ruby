@@ -19,7 +19,7 @@ module RxNav
   end
 
   def self.make_request query
-    encoded_query = URI.encode(query)
+    encoded_query = URI.encode_uri_component(query)
     request = URI.parse("https://rxnav.nlm.nih.gov/REST#{encoded_query}")
     return RxNav.nori.parse(Net::HTTP.get request)
   end
